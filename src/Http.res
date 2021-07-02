@@ -1,41 +1,47 @@
 type headers = Js.Dict.t<string>
 
-type requestBody = string // TODO: find a way to feed in request too
+module Request = {
+  type t
 
-type request
+  type body = string // TODO: find a way to feed in request too
 
-type requestInit = {
+  type init = {
     method: option<string>,
     headers: option<headers>,
-    body: option<requestBody>,
+    body: option<body>,
     redirect: option<string>,
-}
-let makeRequestInit = (~method=?, ~headers=?, ~body=?, ~redirect=?, ()) => {
+  }
+  let makeInit = (~method=?, ~headers=?, ~body=?, ~redirect=?, ()) => {
     method: method,
     headers: headers,
     body: body,
     redirect: redirect,
+  }
+
+  @new external make1: (string) => t = "Request"
+  @new external make2: (string, init) => t = "Request"
 }
 
-@new external makeRequest: (string, requestInit) => request = "Request"
+module Response = {
+  type t
 
-type responseBody = string
+  type body = string
 
-type responseInit = {
+  type init = {
     status: option<int>,
     statusText: option<string>,
     headers: option<headers>,
-}
-let makeResponseInit = (~status=?, ~statusText=?, ~headers=?, ()) => {
-  status: status,
-  statusText: statusText,
-  headers: headers,
+  }
+  let makeInit = (~status=?, ~statusText=?, ~headers=?, ()) => {
+    status: status,
+    statusText: statusText,
+    headers: headers,
+  }
+
+  @new external make0: unit => t = "Response"
+  @new external make1: body => t = "Response"
+  @new external make2: (body, init) => t = "Response"
 }
 
-type response
-@new external makeResponse0: unit => response = "Response"
-@new external makeResponse1: (responseBody) => response = "Response"
-@new external makeResponse2: (responseBody, responseInit) => response = "Response"
-
-type event = {"request": request}
-@send external respondWith: (event, Js.Promise.t<response>) => unit = "respondWith"
+type event = {"request": Request.t}
+@send external respondWith: (event, Js.Promise.t<Response.t>) => unit = "respondWith"
