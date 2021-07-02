@@ -1,0 +1,8 @@
+name = "yacp"
+type = "webpack"
+webpack_config = "webpack.config.js"
+
+account_id = "<INSERT HERE>"
+workers_dev = true
+route = ""
+zone_id = ""
