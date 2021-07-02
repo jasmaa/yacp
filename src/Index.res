@@ -3,12 +3,14 @@
 let handleRequest = _request => {
   let req = Http.Request.make2("https://google.com", Http.Request.makeInit(~method="GET", ()))
 
-  Js.Promise.resolve(
-    Http.Response.make2(
-      "Hello world",
-      Http.Response.makeInit(~headers=Js.Dict.fromArray([("Content-Type", "text/plain")]), ()),
-    ),
-  )
+  Http.fetch(req)->Js.Promise.then_(res => {
+    Js.Promise.resolve(
+      Http.Response.make2(
+        res["status"]->Belt.Int.toString,
+        Http.Response.makeInit(~headers=Js.Dict.fromArray([("Content-Type", "text/plain")]), ()),
+      ),
+    )
+  }, _)
 }
 
 addEventListener("fetch", event => {

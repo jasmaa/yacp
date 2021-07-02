@@ -5,11 +5,14 @@ import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 function handleRequest(_request) {
-  new Request("https://google.com", Http.$$Request.makeInit("GET", undefined, undefined, undefined, undefined));
-  return Promise.resolve(new Response("Hello world", Http.$$Response.makeInit(undefined, undefined, Caml_option.some(Js_dict.fromArray([[
-                                "Content-Type",
-                                "text/plain"
-                              ]])), undefined)));
+  var req = new Request("https://google.com", Http.$$Request.makeInit("GET", undefined, undefined, undefined, undefined));
+  var __x = fetch(req);
+  return __x.then(function (res) {
+              return Promise.resolve(new Response(String(res.status), Http.$$Response.makeInit(undefined, undefined, Caml_option.some(Js_dict.fromArray([[
+                                            "Content-Type",
+                                            "text/plain"
+                                          ]])), undefined)));
+            });
 }
 
 addEventListener("fetch", (function ($$event) {
