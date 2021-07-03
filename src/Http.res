@@ -8,24 +8,64 @@ module Request = {
 
   type body
 
+  type initCfProperties = {
+    "apps": option<bool>,
+    "cacheEverything": option<bool>,
+    "cacheKey": option<string>,
+    "cacheTtl": option<float>,
+    "cacheTtlByStatus": option<Js.Dict.t<float>>,
+    "minify": option<{
+      "javascript?": bool,
+      "css?": bool,
+      "html?": bool,
+    }>,
+    "mirage": option<bool>,
+    "polish": option<bool>,
+    "resolveOverride": option<string>,
+    "scrapeShield": option<bool>
+  }
+
   type init = {
-    // TODO: add cf
+    "cf": option<initCfProperties>,
     "method": option<string>,
     "headers": option<Headers.t>,
     "body": option<body>,
     "redirect": option<string>,
   }
-  let makeInit = (~method=?, ~headers=?, ~body=?, ~redirect=?, ()) => {
+  let makeInit = (~cf=?, ~method=?, ~headers=?, ~body=?, ~redirect=?, ()) => {
+    "cf": cf,
     "method": method,
     "headers": headers,
     "body": body,
     "redirect": redirect,
   }
 
+  type tlsClientAuth
+
+  type incomingCfProperties = {
+    "asn": string,
+    "colo": string,
+    "country": Js.Nullable.t<string>,
+    "httpProtocol": string,
+    "requestPriority": Js.Nullable.t<string>,
+    "tlsCipher": string,
+    "tlsClientAuth": Js.Nullable.t<tlsClientAuth>,
+    "tlsVersion": string,
+    "city": Js.Nullable.t<string>,
+    "continent": Js.Nullable.t<string>,
+    "latitude": Js.Nullable.t<string>,
+    "longitude": Js.Nullable.t<string>,
+    "postalCode": Js.Nullable.t<string>,
+    "metroCode": Js.Nullable.t<string>,
+    "region": Js.Nullable.t<string>,
+    "regionCode": Js.Nullable.t<string>,
+    "timezone": string,
+  }
+
   type t = {
     "body": body,
     "bodyUsed": bool,
-    // TODO: add cf
+    "cf": incomingCfProperties,
     "headers": Headers.t,
     "method": string,
     "redirect": string,

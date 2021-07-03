@@ -3,8 +3,9 @@
 
 var $$Headers = {};
 
-function makeInit(method, headers, body, redirect, param) {
+function makeInit(cf, method, headers, body, redirect, param) {
   return {
+          cf: cf,
           method: method,
           headers: headers,
           body: body,

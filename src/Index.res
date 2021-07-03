@@ -3,7 +3,7 @@
 let handleRequest = request => {
   let url = Url.make(request["url"])
   let searchParams = Url.SearchParams.make(url["search"])
-
+  
   switch searchParams->Url.SearchParams.get("targetURL")->Js.Nullable.toOption {
   | Some(targetUrl) =>
     // Fetch targetUrl if found
