@@ -92,6 +92,8 @@ module Response = {
     "headers": headers,
   }
 
+  type webSocket
+
   type t = {
     "body": body,
     "bodyUsed": bool,
@@ -102,7 +104,7 @@ module Response = {
     "status": int,
     "statusText": string,
     "url": string,
-    // TODO: add websocket
+    "webSocket": webSocket,
   }
   @new external make0: unit => t = "Response"
   @new external makeFromString1: string => t = "Response"

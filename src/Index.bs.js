@@ -7,7 +7,6 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 function handleRequest(request) {
   var url = new URL(request.url);
   var searchParams = new URLSearchParams(url.search);
-  console.log(request.cf);
   var targetUrl = searchParams.get("targetURL");
   if (targetUrl == null) {
     return Promise.resolve(new Response("no targetURL provided", Http.$$Response.makeInit(400, undefined, Caml_option.some(Js_dict.fromArray([[
