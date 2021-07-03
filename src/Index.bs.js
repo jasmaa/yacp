@@ -17,9 +17,14 @@ function handleRequest(request) {
   var req = new Request(targetUrl, Http.$$Request.makeInit("GET", undefined, undefined, undefined, undefined));
   var __x = fetch(req);
   var __x$1 = __x.then(function (res) {
-        return Promise.resolve(res);
+        var res$1 = new Response(res.body, Http.$$Response.makeInit(undefined, undefined, Caml_option.some(res.headers), undefined));
+        res$1.headers.set("Access-Control-Allow-Origin", "*");
+        res$1.headers.set("Access-Control-Allow-Methods", "GET");
+        res$1.headers.append("Vary", "Origin");
+        return Promise.resolve(res$1);
       });
-  return __x$1.catch(function (_err) {
+  return __x$1.catch(function (err) {
+              console.log(err);
               return Promise.resolve(new Response("could not resolve targetURL", Http.$$Response.makeInit(400, undefined, Caml_option.some(Js_dict.fromArray([[
                                             "Content-Type",
                                             "text/plain"

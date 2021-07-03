@@ -1,4 +1,8 @@
-type headers = Js.Dict.t<string>
+module Headers = {
+  type t = Js.Dict.t<string>
+  @send external set: (t, string, string) => unit = "set"
+  @send external append: (t, string, string) => unit = "append"
+}
 
 module Request = {
 
@@ -7,7 +11,7 @@ module Request = {
   type init = {
     // TODO: add cf
     "method": option<string>,
-    "headers": option<headers>,
+    "headers": option<Headers.t>,
     "body": option<body>,
     "redirect": option<string>,
   }
@@ -19,10 +23,10 @@ module Request = {
   }
 
   type t = {
-    // TODO: add body
+    "body": body,
     "bodyUsed": bool,
     // TODO: add cf
-    "headers": headers,
+    "headers": Headers.t,
     "method": string,
     "redirect": string,
     "url": string,
@@ -38,7 +42,7 @@ module Response = {
   type init = {
     "status": option<int>,
     "statusText": option<string>,
-    "headers": option<headers>,
+    "headers": option<Headers.t>,
   }
   let makeInit = (~status=?, ~statusText=?, ~headers=?, ()) => {
     "status": status,
@@ -47,10 +51,10 @@ module Response = {
   }
 
   type t = {
-    // TODO: add body
+    "body": body,
     "bodyUsed": bool,
     "encodeBody": string,
-    "headers": headers,
+    "headers": Headers.t,
     "ok": bool,
     "redirected": bool,
     "status": int,

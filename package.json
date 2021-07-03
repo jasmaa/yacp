@@ -5,7 +5,7 @@
   "description": "Yet another CORS proxy",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"rescript build -w\" \"wrangler dev\"",
+    "start": "concurrently -k \"rescript build -w\" \"wrangler dev\"",
     "build": "rescript",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.{js,css,json,md}'"
