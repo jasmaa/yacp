@@ -6,7 +6,7 @@ module Headers = {
 
 module Request = {
 
-  type body = string // TODO: find a way to feed in request too
+  type body = string // TODO: add other types
 
   type init = {
     // TODO: add cf
@@ -37,7 +37,7 @@ module Request = {
 
 module Response = {
 
-  type body = string
+  type body = string // TODO: add other types
 
   type init = {
     "status": option<int>,
