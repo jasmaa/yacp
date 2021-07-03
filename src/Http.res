@@ -6,7 +6,7 @@ module Headers = {
 
 module Request = {
 
-  type body = string // TODO: add other types
+  type body
 
   type init = {
     // TODO: add cf
@@ -31,13 +31,15 @@ module Request = {
     "redirect": string,
     "url": string,
   }
-  @new external make1: (string) => t = "Request"
-  @new external make2: (string, init) => t = "Request"
+  @new external makeFromString1: (string) => t = "Request"
+  @new external makeFromRequest1: (t) => t = "Request"
+  @new external makeFromString2: (string, init) => t = "Request"
+  @new external makeFromRequest2: (t, init) => t = "Request"
 }
 
 module Response = {
 
-  type body = string // TODO: add other types
+  type body
 
   type init = {
     "status": option<int>,
@@ -63,8 +65,10 @@ module Response = {
     // TODO: add websocket
   }
   @new external make0: unit => t = "Response"
-  @new external make1: body => t = "Response"
-  @new external make2: (body, init) => t = "Response"
+  @new external makeFromString1: string => t = "Response"
+  @new external makeFromBody1: body => t = "Response"
+  @new external makeFromString2: (string, init) => t = "Response"
+  @new external makeFromBody2: (body, init) => t = "Response"
 }
 
 type event = {"request": Request.t}

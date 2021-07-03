@@ -7,9 +7,9 @@ let handleRequest = request => {
   switch searchParams->Url.SearchParams.get("targetURL")->Js.Nullable.toOption {
   | Some(targetUrl) =>
     // Fetch targetUrl if found
-    let req = Http.Request.make2(targetUrl, Http.Request.makeInit(~method="GET", ()))
+    let req = Http.Request.makeFromString2(targetUrl, Http.Request.makeInit(~method="GET", ()))
     Http.fetch(req)->Js.Promise.then_(res => {
-      let res = Http.Response.make2(
+      let res = Http.Response.makeFromBody2(
         res["body"],
         Http.Response.makeInit(~headers=res["headers"], ())
       )
@@ -20,7 +20,7 @@ let handleRequest = request => {
     }, _)->Js.Promise.catch(err => {
       Js.log(err)
       Js.Promise.resolve(
-        Http.Response.make2(
+        Http.Response.makeFromString2(
           "could not resolve targetURL",
           Http.Response.makeInit(
             ~status=400,
@@ -33,7 +33,7 @@ let handleRequest = request => {
   | None =>
     // No targetUrl provided
     Js.Promise.resolve(
-      Http.Response.make2(
+      Http.Response.makeFromString2(
         "no targetURL provided",
         Http.Response.makeInit(
           ~status=400,
